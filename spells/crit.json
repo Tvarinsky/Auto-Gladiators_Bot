@@ -1,0 +1,17 @@
+{
+  "legendary": ["GIFT OF LIBERATION", "WAR FRENZY"],
+  "epic": ["MANABLAST", "SOURCE DETIONATION", "WAR FRENZY"],
+  "good": [
+    "BURST FURY",
+    "BODY OF RAGE",
+    "BURST WOUND",
+    "BURST SHIELD",
+    "BURST MAGIC",
+    "BURST FROST",
+    "BURST REGENERATION",
+    "BURST BLADE",
+    "UNSEEN RAGE",
+    "EAGLE EYE BOOST"
+  ],
+  "bad": ["RAGE RESISTANCE", "BURST TOXIN", "RAGE WARD"]
+}

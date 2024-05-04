@@ -1,0 +1,17 @@
+{
+  "legendary": ["FERVOR", "OMNISLASH"],
+  "epic": ["BLOODTHIRSTY STRIKE", "RELENTLESS STRIKES", "MOMENT OF COURAGE"],
+  "good": [
+    "FURY STRIKE",
+    "INJURY STRIKE",
+    "BLOOD BLADE",
+    "BULWARK",
+    "FROST STRIKE",
+    "ARCANE BLADE",
+    "VENOM STRIKE",
+    "BURST BLADE",
+    "KEEN BLADE",
+    "HEALING STRIKE"
+  ],
+  "bad": ["WEAR BLADE", "UNSEEN BLADE"]
+}

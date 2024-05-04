@@ -1,0 +1,18 @@
+{
+  "legendary": ["ARCANE STORM", "INITIATIVE"],
+  "epic": ["ESSENCE FLUX", "ARCANE DETERRENCE", "ARCANE TORRENT"],
+  "good": [
+    "MAGIC SURGE",
+    "MAGIC SUPPRSESSION",
+    "ARCANE BLADE",
+    "BURST MAGIC",
+    "BLOOD OF MAGIC",
+    "ARCANE WARD",
+    "MAGIC OF CURE",
+    "ARCANE SHIELD",
+    "ARCANE FROST",
+    "ARCANE INJURY",
+    "ARCANE SPARK"
+  ],
+  "bad": ["FORMLESS MAGIC", "ARCANE TOXIN"]
+}

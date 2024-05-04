@@ -1,0 +1,17 @@
+{
+  "legendary": ["FROSTBITE", "FROST NOVA"],
+  "epic": ["ICE BLESSING", "FRIGID COLD", "PRE-BATTLE FROST"],
+  "good": [
+    "LASTING FREEZE",
+    "FROST STRIKE",
+    "FORMLESS FROST",
+    "BURST FROST",
+    "BLOOD OF THE FROZEN",
+    "FREEZING HEALING",
+    "ARCANE FROST",
+    "FROST SHIELD",
+    "FROST WARD",
+    "DUAL BREATH"
+  ],
+  "bad": ["NOXIOUS FROST", "TOXIC FROST", "FROST IMMUNITY"]
+}

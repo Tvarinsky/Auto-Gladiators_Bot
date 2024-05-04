@@ -1,0 +1,18 @@
+{
+  "legendary": ["DOOM", "Inner Fire"],
+  "epic": ["WRAITH OF REVENGE", "PRE-BATTLE FURY", "MORTIMMER KISSES"],
+  "good": [
+    "BURNING FURY",
+    "DISRUPTIVE FURY",
+    "FURY STRIKE",
+    "UNSEEN FURY",
+    "BURST FURY",
+    "BURNING BODY",
+    "FLAME OF CURE",
+    "ARCANE SPARK",
+    "BURNING SHIELD",
+    "BURNING WOUND",
+    "BURNING TOXIN"
+  ],
+  "bad": ["FLAME WARD", "DUAL BREATH"]
+}
