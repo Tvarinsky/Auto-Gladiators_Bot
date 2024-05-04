@@ -96,8 +96,8 @@ def wait_until_balance_grows():
             pyautogui.click(1262, 821)
             lock_button_clicked = True
 
-        lock_button_clicked = True
-        pyautogui.click(1262, 621)
+        if lock_button_clicked:
+            pyautogui.click(1262, 621)
 
         time.sleep(1)
 
@@ -164,9 +164,7 @@ def match_spells_with_attribute(
 
     for category, spells in spells_data.items():
         for spell in spells:
-            cleaned_spell = re.sub(
-                r"[^\w\s|]", "", spell.strip().lower().replace("|", "")
-            )
+            cleaned_spell = re.sub(r"[^\w\s-]", "", spell.strip().lower())
             if cleaned_spell in cleaned_current_spells:
                 relevant_spells.append(spell)
 
@@ -181,16 +179,27 @@ def match_spells_with_attribute(
 
     waiting = False
 
+    print(balance)
+    print(attribute_name, attributes)
+
     for idx, spell_bought in enumerate(spells_bought_this_cycle):
         if not spell_bought:
             if idx < len(relevant_spells):
                 cleaned_current_spells = [
-                    re.sub(r"[^\w\s|]", "", spell.strip().lower().replace("|", ""))
+                    re.sub(
+                        r"[^\w\s-]",
+                        "",
+                        spell.strip().lower().replace(" ", "").replace("|", ""),
+                    )
                     for spell in current_spells
                 ]
 
                 cleaned_relevant = [
-                    re.sub(r"[^\w\s|]", "", spell.strip().lower().replace("|", ""))
+                    re.sub(
+                        r"[^\w\s-]",
+                        "",
+                        spell.strip().lower().replace(" ", "").replace("|", ""),
+                    )
                     for spell in relevant_spells[idx]
                 ]
 
