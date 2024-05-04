@@ -214,7 +214,7 @@ def match_spells_with_attribute(
                     ][1],
                 )
 
-                if balance >= 100:
+                if balance >= 1100:
                     buy_spell(x, y, current_spells[spell_index])
                     waiting = False
                     spells_bought_this_cycle[idx] = True
@@ -222,7 +222,7 @@ def match_spells_with_attribute(
                     wait_until_balance_grows()
                     waiting = True
 
-    if not waiting and balance >= 20 and not lock_button_clicked:
+    if not waiting and balance >= 1020 and not lock_button_clicked:
         refresh_spells()
         spells_bought_this_cycle = [False, False, False]
 
