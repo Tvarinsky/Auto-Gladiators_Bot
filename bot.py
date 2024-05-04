@@ -77,6 +77,30 @@ def preprocess_images():
 
 scaled_attributes = preprocess_images()
 
+lock_button_clicked = False
+
+def wait_until_balance_grows():
+    global lock_button_clicked
+    while True:
+        balance_region = (940, 1010, 1000, 1050)
+        balance_text = read_text_from_screen(balance_region)
+        balance_numbers = extract_numbers(balance_text)
+        balance = int(balance_numbers[0]) if balance_numbers else 0
+
+        if balance and balance >= 1000 and lock_button_clicked:
+            lock_button_clicked = False
+            break
+
+        if not lock_button_clicked:
+            pyautogui.click(1262, 821)
+            lock_button_clicked = True
+
+        
+        lock_button_clicked = True
+        pyautogui.click(1262, 621)
+
+        time.sleep(1)
+
 
 def match_attribute(image):
     max_ssim = -1
@@ -109,32 +133,98 @@ def check_character_attributes():
     return attribute_name
 
 
-def match_spells_with_attribute(current_spells, attribute_name):
+def buy_spell(x, y, attribute_name):
+    pyautogui.click(x, y)
+
+
+spells_bought_this_cycle = [False, False, False]
+
+
+def refresh_spells():
+    refresh_button_coordinates = (1264, 657)
+    pyautogui.click(refresh_button_coordinates)
+
+
+def match_spells_with_attribute(
+    current_spells, attribute_name, spells_bought_this_cycle
+):
     filename = f"spells/{attribute_name}.json"
+
+    time.sleep(0.3)
 
     with open(filename, "r") as f:
         spells_data = json.load(f)
 
     cleaned_current_spells = [
-        spell.strip().lower().replace(" ", "").replace(".", "").replace("|", "")
-        for spell in current_spells
+        re.sub(r"[^\w\s|]", "", spell.strip().lower().replace("|", "")) for spell in current_spells
     ]
-
-    print(cleaned_current_spells)
 
     relevant_spells = []
 
     for category, spells in spells_data.items():
         for spell in spells:
-            cleaned_spell = (
-                spell.strip().lower().replace(" ", "").replace(".", "").replace("|", "")
-            )
+            cleaned_spell = re.sub(r"[^\w\s-]", "", spell.strip().lower())
             if cleaned_spell in cleaned_current_spells:
                 relevant_spells.append(spell)
 
-    print("Relevant spells found:", relevant_spells)
+    attribute1_region = (550, 772, 700, 792)
+    attribute2_region = (768, 772, 938, 792)
+    attribute3_region = (1006, 772, 1180, 792)
 
-    return relevant_spells
+    balance_region = (940, 1010, 1000, 1050)
+    balance_text = read_text_from_screen(balance_region)
+    balance_numbers = extract_numbers(balance_text)
+    balance = int(balance_numbers[0]) if balance_numbers else 0
+
+    waiting = False
+
+    for idx, spell_bought in enumerate(spells_bought_this_cycle):
+        print(spells, current_spells)
+        if not spell_bought:
+            if idx < len(relevant_spells):
+                cleaned_current_spells = [
+                    re.sub(r"[^\w\s-]", "", spell.strip().lower().replace(" ", "").replace("|", "").replace(" ", "").replace("|", "").replace(" ", ""))
+                    for spell in current_spells
+                ]
+
+                cleaned_relevant = [
+                    re.sub(r"[^\w\s-]", "", spell.strip().lower().replace(" ", "").replace("|", "").replace(" ", "").replace("|", "").replace(" ", ""))
+                    for spell in relevant_spells[idx]
+                ]
+
+                cleaned_relevant = "".join(cleaned_relevant)
+
+                spell_index = next(
+                    (
+                        i
+                        for i, spell in enumerate(cleaned_current_spells)
+                        if spell in cleaned_relevant
+                    ),
+                    -1,
+                )
+
+                x, y = (
+                    [attribute1_region, attribute2_region, attribute3_region][
+                        spell_index
+                    ][0],
+                    [attribute1_region, attribute2_region, attribute3_region][
+                        spell_index
+                    ][1],
+                )
+
+                print(balance)
+
+                if balance >= 100:
+                    buy_spell(x, y, current_spells[spell_index])
+                    waiting = False
+                    spells_bought_this_cycle[idx] = True
+                elif balance <= 1100:
+                    wait_until_balance_grows()
+                    waiting = True
+
+    if not waiting and balance >= 20 and not lock_button_clicked:
+        refresh_spells()
+        spells_bought_this_cycle = [False, False, False]
 
 
 def get_spells():
@@ -226,18 +316,20 @@ if __name__ == "__main__":
             gold_text = read_text_from_screen(gold_region)
 
             gold_numbers = extract_numbers(gold_text)
-            print("Gold:", gold_numbers)
 
             attribute_name = check_character_attributes()
-            print("Attribute:", attribute_name)
 
             currentSpells = get_spells()
 
             if currentSpells and attribute_name:
                 if attribute_name in attributes:
-                    match_spells_with_attribute(currentSpells, attribute_name)
+                    match_spells_with_attribute(
+                        currentSpells, attribute_name, spells_bought_this_cycle
+                    )
                 else:
                     print("Attribute not found in attributes:", attribute_name)
+
+        spells_bought_this_cycle = [False, False, False]
 
         dota_running = False
         for p in psutil.process_iter():

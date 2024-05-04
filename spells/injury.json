@@ -1,5 +1,5 @@
 {
-  "legendary": ["WRATH OF THUNDER", "Shadow Poison"],
+  "legendary": ["WRAITH OF THUNDER", "Shadow Poison"],
   "epic": ["PRE-BATTLE VULNERABILITY", "DAMAGE MASTERY", "CURSE OF DECREPIFYING"],
   "good": [
     "PERSISTENT VULNERABILITY",
@@ -11,7 +11,8 @@
     "VULNERABILITY GUARDIAN",
     "FORMLESS WOUND",
     "NOXIOUS FROSTBITE",
-    "BURNING WOUND"
+    "BURNING WOUND",
+    "BLOOD OF INJURING"
   ],
   "bad": ["VULNERABILITY IMMUNITY", "WOUNDS POISONING"]
 }

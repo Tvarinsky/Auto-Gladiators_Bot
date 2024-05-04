@@ -1,0 +1,7 @@
+pygame
+pillow
+pyautogui
+pytesseract
+scikit-image
+pynput
+psutil
