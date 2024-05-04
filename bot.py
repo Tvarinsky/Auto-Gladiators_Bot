@@ -79,6 +79,7 @@ scaled_attributes = preprocess_images()
 
 lock_button_clicked = False
 
+
 def wait_until_balance_grows():
     global lock_button_clicked
     while True:
@@ -95,7 +96,6 @@ def wait_until_balance_grows():
             pyautogui.click(1262, 821)
             lock_button_clicked = True
 
-        
         lock_button_clicked = True
         pyautogui.click(1262, 621)
 
@@ -156,14 +156,17 @@ def match_spells_with_attribute(
         spells_data = json.load(f)
 
     cleaned_current_spells = [
-        re.sub(r"[^\w\s|]", "", spell.strip().lower().replace("|", "")) for spell in current_spells
+        re.sub(r"[^\w\s|]", "", spell.strip().lower().replace("|", ""))
+        for spell in current_spells
     ]
 
     relevant_spells = []
 
     for category, spells in spells_data.items():
         for spell in spells:
-            cleaned_spell = re.sub(r"[^\w\s-]", "", spell.strip().lower())
+            cleaned_spell = re.sub(
+                r"[^\w\s|]", "", spell.strip().lower().replace("|", "")
+            )
             if cleaned_spell in cleaned_current_spells:
                 relevant_spells.append(spell)
 
@@ -179,16 +182,15 @@ def match_spells_with_attribute(
     waiting = False
 
     for idx, spell_bought in enumerate(spells_bought_this_cycle):
-        print(spells, current_spells)
         if not spell_bought:
             if idx < len(relevant_spells):
                 cleaned_current_spells = [
-                    re.sub(r"[^\w\s-]", "", spell.strip().lower().replace(" ", "").replace("|", "").replace(" ", "").replace("|", "").replace(" ", ""))
+                    re.sub(r"[^\w\s|]", "", spell.strip().lower().replace("|", ""))
                     for spell in current_spells
                 ]
 
                 cleaned_relevant = [
-                    re.sub(r"[^\w\s-]", "", spell.strip().lower().replace(" ", "").replace("|", "").replace(" ", "").replace("|", "").replace(" ", ""))
+                    re.sub(r"[^\w\s|]", "", spell.strip().lower().replace("|", ""))
                     for spell in relevant_spells[idx]
                 ]
 
@@ -211,8 +213,6 @@ def match_spells_with_attribute(
                         spell_index
                     ][1],
                 )
-
-                print(balance)
 
                 if balance >= 100:
                     buy_spell(x, y, current_spells[spell_index])
